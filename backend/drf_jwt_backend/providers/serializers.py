@@ -5,4 +5,4 @@ from .models import Provider
 class ProviderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Provider
-        fields = ['id', 'first_name', 'last_name', 'services_provided']
+        fields = ['id', 'first_name', 'last_name', 'services_provided', 'user_id']

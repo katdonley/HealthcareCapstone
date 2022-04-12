@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from .models import Patient
 from .serializers import PatientSerializer
+from providers.models import Provider
+from providers.serializers import ProviderSerializer
 from django.contrib.auth.models import User
 
 
@@ -20,7 +22,7 @@ def get_all_patients(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def user_patients(request):
     if request.method == 'POST':
@@ -29,3 +31,7 @@ def user_patients(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #elif request.method == 'GET':
+    #    patients = Provider.objects.filter(user_id=request.user.id)
+    #    serializer = ProviderSerializer(patients, many=True)
+    #    return Response(serializer.data)
