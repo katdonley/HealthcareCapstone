@@ -35,7 +35,7 @@ def user_providers(request):
     #    serializer = PatientSerializer(patients, many=True)
     #    return Response(serializer.data)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def provider_detail(request, pk):
     provider = get_object_or_404(Provider, pk=pk)
@@ -47,4 +47,7 @@ def provider_detail(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    elif request.method == 'DELETE':
+        provider.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

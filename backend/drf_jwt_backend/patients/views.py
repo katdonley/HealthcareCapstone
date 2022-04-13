@@ -39,7 +39,7 @@ def user_patients(request):
     #    return Response(serializer.data)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def patient_detail(request, pk):
     patient = get_object_or_404(Patient, pk=pk)
@@ -51,5 +51,7 @@ def patient_detail(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
+    elif request.method == 'DELETE':
+        patient.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
