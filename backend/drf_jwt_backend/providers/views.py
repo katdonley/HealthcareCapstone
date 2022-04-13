@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
+
+
 from .models import Provider
 from .serializers import ProviderSerializer
 from patients.models import Patient
@@ -32,3 +34,17 @@ def user_providers(request):
     #    patients = Patient.objects.filter(user_id=request.user.id)
     #    serializer = PatientSerializer(patients, many=True)
     #    return Response(serializer.data)
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def provider_detail(request, pk):
+    provider = get_object_or_404(Provider, pk=pk)
+    if request.method == 'GET':
+        serializer = ProviderSerializer(provider)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProviderSerializer(provider, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
