@@ -15,11 +15,14 @@ let initialValues = {
     primary_number: "",
     address: "",
     diagnoses: "",
-    services_needed: "",
+    needs_pt: "",
+    needs_bt: "",
+    needs_st: "",
+    needs_ot: "",
     recertification_date: "",
     summary_of_care_notes: "",
     visits: "",
-    // providers: "",
+    providers: "",
 };
 
 const AddPatientPage = () => {
@@ -125,11 +128,38 @@ const AddPatientPage = () => {
                     />
                 </label>
                 <label>
-                    ServicesNeeded:{" "}
+                    NeedsPt:{" "}
                     <input
                         type="text"
-                        name="services_needed"
-                        value={formData.services_needed}
+                        name="needs_pt"
+                        value={formData.needs_pt}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <label>
+                    NeedsBt:{" "}
+                    <input
+                        type="text"
+                        name="needs_bt"
+                        value={formData.needs_bt}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <label>
+                    NeedsSt:{" "}
+                    <input
+                        type="text"
+                        name="needs_st"
+                        value={formData.needs_st}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <label>
+                    NeedsOt:{" "}
+                    <input
+                        type="text"
+                        name="needs_ot"
+                        value={formData.needs_ot}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -160,7 +190,7 @@ const AddPatientPage = () => {
                         onChange={handleInputChange}
                     />
                 </label>
-                {/* <label>
+                <label>
                     Providers:{" "}
                     <input
                         type="text"
@@ -168,7 +198,7 @@ const AddPatientPage = () => {
                         value={formData.providers}
                         onChange={handleInputChange}
                     />
-                </label> */}
+                </label>
                 <button>Add Patient</button>
             </form>
         </div>

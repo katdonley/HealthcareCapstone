@@ -1,5 +1,5 @@
-from datetime import date
-from tkinter import CASCADE
+
+from operator import mod
 from django.db import models
 from django.contrib.auth.models import User
 from providers.models import Provider
@@ -18,7 +18,10 @@ class Patient(models.Model):
     address = models.TextField()
     # can I make the address variable contain an array of the components it needs?
     diagnoses = models.CharField(max_length=1000)
-    services_needed = models.CharField(max_length=1000)
+    needs_pt = models.BooleanField(default=False)
+    needs_bt = models.BooleanField(default=False)
+    needs_st = models.BooleanField(default=False)
+    needs_ot = models.BooleanField(default=False)
     recertification_date = models.CharField(max_length=10)
     # research how to incorporate DateFields and how to get mm/dd/yyyy, also allow future
     summary_of_care_notes = models.TextField()
