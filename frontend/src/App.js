@@ -11,6 +11,7 @@ import AddPatientPage from "./pages/AddPatientPage/AddPatientPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
+import ProviderSchedule from "./components/ProviderSchedule/ProviderSchedule";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
@@ -35,6 +36,14 @@ function App() {
         element={
           <PrivateRoute>
             <AddPatientPage />
+          </PrivateRoute>
+        }
+        />
+        <Route 
+        path="/providerschedule" 
+        element={
+          <PrivateRoute>
+            <ProviderSchedule />
           </PrivateRoute>
         }
         />
