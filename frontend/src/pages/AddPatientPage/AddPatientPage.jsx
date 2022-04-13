@@ -6,9 +6,20 @@ import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
 
 let initialValues = {
-    make: "",
-    model: "",
-    year: "",
+    first_name: "",
+    last_name: "",
+    age: "",
+    sex: "",
+    guardian_name: "",
+    guardian_relationship: "",
+    primary_number: "",
+    address: "",
+    diagnoses: "",
+    services_needed: "",
+    recertification_date: "",
+    summary_of_care_notes: "",
+    visits: "",
+    // providers: "",
 };
 
 const AddPatientPage = () => {
@@ -123,6 +134,15 @@ const AddPatientPage = () => {
                     />
                 </label>
                 <label>
+                    RecertificationDate:{" "}
+                    <input
+                        type="text"
+                        name="recertification_date"
+                        value={formData.recertification_date}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <label>
                     SummaryOfCareNotes:{" "}
                     <input
                         type="text"
@@ -132,14 +152,23 @@ const AddPatientPage = () => {
                     />
                 </label>
                 <label>
-                    UserId:{" "}
+                    Visits:{" "}
                     <input
                         type="text"
-                        name="user_id"
-                        value={formData.user_id}
+                        name="visits"
+                        value={formData.visits}
                         onChange={handleInputChange}
                     />
                 </label>
+                {/* <label>
+                    Providers:{" "}
+                    <input
+                        type="text"
+                        name="providers"
+                        value={formData.providers}
+                        onChange={handleInputChange}
+                    />
+                </label> */}
                 <button>Add Patient</button>
             </form>
         </div>
