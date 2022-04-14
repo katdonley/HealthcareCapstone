@@ -40,8 +40,8 @@ class Address(models.Model):
 class Visit(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, related_name='+')
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, related_name='+')
-    date = models.CharField(max_length=10)
-    time = models.CharField(max_length=10)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     was_attended = models.BooleanField(default=False)
     makeup_needed = models.BooleanField(default=False)
     
