@@ -1,6 +1,7 @@
 // General Imports
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import React, {useState, useEffect, Component} from "react";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
@@ -15,8 +16,12 @@ import ProviderSchedule from "./components/ProviderSchedule/ProviderSchedule";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+// import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
 
 function App() {
+
+  
+
   return (
     <div>
       <Navbar />
@@ -47,6 +52,14 @@ function App() {
           </PrivateRoute>
         }
         />
+        {/* <Route 
+        path="/viewpatients" 
+        element={
+          <PrivateRoute>
+            <ViewPatientsPage patientList = {ViewPatientsPage}/>
+          </PrivateRoute>
+        }
+        /> */}
       </Routes>
       <Footer />
     </div>
