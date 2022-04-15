@@ -7,6 +7,7 @@ import useAuth from '../../hooks/useAuth'
 //Plugins
 import dayGridPlugin from '@fullcalendar/daygrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+import interactionPlugin from '@fullcalendar/interaction'
 // import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 
 
@@ -14,14 +15,27 @@ const ProviderSchedule = (props) => {
     const [user, token] = useAuth();
     const [patientInfo, setPatientInfo] = useState([]);
     const [visits, setVisits] = useState([]);
+    const [resources, setResources] = useState([]);
     const [patientList, setPatientList] = useState([]);
     const [currentProviderId, setCurrentProviderId] = useState([]);
 
     async function getVisits(){
-        let response = await axios.get("http://127.0.0.1:8000/api/visits/all/visits/");
-        console.log(response.data.items)
+        let response = await axios.get("http://127.0.0.1:8000/api/visits/all/visits/", {headers:{authorization:"Bearer " + token}});
+        console.log(response.data)
+        buildEvents(response.data)
     
-        setVisits(response.data.items)
+    }
+    function buildEvents(eventsData){
+        let resources = []
+        let visits = []
+        eventsData.map((el, i) =>{
+            visits.push ({id: i, resourceId: el.id, start: el.start, end: el.end, title: el.patient.first_name})
+            resources.push({id: el.id, title:el.patient.first_name})
+        })
+        console.log(visits)
+        console.log(resources)
+        setVisits(visits)
+        setResources(resources)
     }
 
     useEffect(()=>{
@@ -42,8 +56,6 @@ const ProviderSchedule = (props) => {
     //     })
     //     return results;
     // }
-    //let patientInfo = getPatientInfo()
-    // console.log(patientInfo)
 
     return (
         <div>
@@ -57,14 +69,9 @@ const ProviderSchedule = (props) => {
             plugins={[ resourceTimelinePlugin ]}
             // eventContent={renderEventContent}
             initialView='resourceTimeline'
-            resources={[
-                {id: visits.patient.id, title: visits.patient.first_name, eventColor:'green'} 
-            ]}
+            resources={resources}
             
-            events={[
-                {id: visits.id, resourceId: visits.patient.id, start: '2022-04-01T02:00:00', end: '2022-04-01T02:30:00', title: visits.patient.first_name},
-                // {title: 'event 2', date: '2022-04-05'}
-            ]}
+            events={visits}
             />
             </div>
         </div>
