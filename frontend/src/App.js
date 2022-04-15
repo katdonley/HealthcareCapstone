@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AddPatientPage from "./pages/AddPatientPage/AddPatientPage";
+import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -52,14 +53,14 @@ function App() {
           </PrivateRoute>
         }
         />
-        {/* <Route 
-        path="/viewpatients" 
+        <Route 
+        path="/viewpatients/:patientId" 
         element={
           <PrivateRoute>
-            <ViewPatientsPage patientList = {ViewPatientsPage}/>
+            <ViewPatientsPage />
           </PrivateRoute>
         }
-        /> */}
+        />
       </Routes>
       <Footer />
     </div>

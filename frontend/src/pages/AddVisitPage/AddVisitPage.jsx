@@ -13,23 +13,21 @@ let initialValues = {
     makeup_needed: "",
 };
 
-const AddVisitPage = () => {
+const AddVisitPage = (props) => {
     const [user, token] = useAuth()
     const navigate = useNavigate()
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, postNewVisit)
 
     async function postNewVisit(){
-        try {
-            let response = await axios.post("http://127.0.0.1:8000/api/patients/", formData, {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            })
-            navigate("/")
-        } catch (error) {
-            console.log(error.message)
-        }
+        let response = await axios.post("http://127.0.0.1:8000/api/visits/", {headers: {Authorization: 'Bearer ' + token}});
+        console.log(response.data)
+
+        
     }
+
+    // function createVisit(visitData){
+    //     let 
+    // }
 
     return(
         <div className="container">
