@@ -9,6 +9,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 import interactionPlugin from '@fullcalendar/interaction'
 import AddVisitPage from '../../pages/AddVisitPage/AddVisitPage'
+import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 // import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 
 
@@ -17,7 +18,7 @@ const ProviderSchedule = (props) => {
 
     const [visits, setVisits] = useState([]);
     const [resources, setResources] = useState([]);
-    // const [patientList, setPatientList] = useState([]);
+    
     const [currentProviderId, setCurrentProviderId] = useState([]);
     const navigate = useNavigate();
 
@@ -106,6 +107,7 @@ const ProviderSchedule = (props) => {
             />
             
             </div>
+            
         </div>
     )
 }

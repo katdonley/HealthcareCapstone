@@ -54,7 +54,7 @@ function App() {
         }
         />
         <Route 
-        path="/viewpatients/:patientId" 
+        path="/patients/:patientId" 
         element={
           <PrivateRoute>
             <ViewPatientsPage />
