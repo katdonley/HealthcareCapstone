@@ -23,5 +23,8 @@ urlpatterns = [
     path('api/patients/', include('patients.urls')),
     path('api/providers/', include('providers.urls')),
     path('api/visits/', include('patients.urls')),
+    path('api/addresses/', include('patients.urls')),
+    path('api/notes/', include('patients.urls')),
+    path('api/summaries/', include('patients.urls')),
 
 ]

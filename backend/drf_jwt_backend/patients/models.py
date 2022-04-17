@@ -33,8 +33,8 @@ class Address(models.Model):
     street = models.CharField(verbose_name="Street", max_length=200)
     city = models.CharField(verbose_name="City", max_length=100)
     zip_code = models.CharField(verbose_name="Zip Code", max_length=10)
-    longitude = models.CharField(max_length=50)
-    latitude = models.CharField(max_length=50)
+    LatLng = models.CharField(max_length=50)
+    
     
 
 class Visit(models.Model):
@@ -47,13 +47,15 @@ class Visit(models.Model):
     
 
 class Note(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, related_name='+')
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, related_name='+')
     visit = models.ForeignKey(Visit, on_delete=models.CASCADE, null=True, related_name='+')
     note = models.TextField()
 
 class Summary_of_care(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True, related_name='+')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, related_name='+')
-    date = models.CharField(max_length=10)
+    date = models.DateTimeField()
     summary_notes = models.TextField()
 
 

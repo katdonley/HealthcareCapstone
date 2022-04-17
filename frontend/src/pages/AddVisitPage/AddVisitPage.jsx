@@ -1,37 +1,44 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import axios from 'axios';
+import { useState, useEffect } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
 
-let initialValues = {
-    patient: "",
-    provider: "",
-    date: "",
-    was_attended: "",
-    makeup_needed: "",
-};
+
 
 const AddVisitPage = (props) => {
     const [user, token] = useAuth()
     const navigate = useNavigate()
+    const [initialValues] = {patient: '', provider: '', start: '', end: '', was_attended: '', makeup_needed: ''};
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, postNewVisit)
+    const [newVisit, setNewVisit] = useState('')
+
+    useEffect(()=>{
+        addNewVisit(newVisit)
+    }, []);
 
     async function postNewVisit(){
         let response = await axios.post("http://127.0.0.1:8000/api/visits/", {headers: {Authorization: 'Bearer ' + token}});
         console.log(response.data)
+        setNewVisit(response.data)
+    }
 
+    function addNewVisit(newVisit){
+        setNewVisit(newVisit)
+        postNewVisit()
+    }
+
+    const handleClick = (event, newVisit) => {
+        event.preventDefault();
+        postNewVisit(newVisit)
         
     }
 
-    // function createVisit(visitData){
-    //     let 
-    // }
-
     return(
         <div className="container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form className={newVisit} onSubmit={handleSubmit}>
                 <label>
                     Patient:{" "}
                     <input
@@ -51,20 +58,20 @@ const AddVisitPage = (props) => {
                     />
                 </label>
                 <label>
-                    Date:{" "}
+                    Start:{" "}
                     <input
                         type="text"
-                        name="date"
-                        value={formData.date}
+                        name="start"
+                        value={formData.start}
                         onChange={handleInputChange}
                     />
                 </label>
                 <label>
-                    Time:{" "}
+                    End:{" "}
                     <input
                         type="text"
-                        name="time"
-                        value={formData.time}
+                        name="end"
+                        value={formData.end}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -86,7 +93,7 @@ const AddVisitPage = (props) => {
                         onChange={handleInputChange}
                     />
                 </label>
-                <button>Add Visit</button>
+                <button onClick={handleClick}>Add Visit</button>
             </form>
         </div>
     )

@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AddPatientPage from "./pages/AddPatientPage/AddPatientPage";
 import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
+import AddVisitPage from "./pages/AddVisitPage/AddVisitPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -17,7 +18,7 @@ import ProviderSchedule from "./components/ProviderSchedule/ProviderSchedule";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
-// import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
+
 
 function App() {
 
@@ -59,6 +60,14 @@ function App() {
           <PrivateRoute>
             <ViewPatientsPage />
           </PrivateRoute>
+        }
+        />
+        <Route 
+        path="/addvisit" 
+        element={
+        <PrivateRoute>
+            <AddVisitPage />
+        </PrivateRoute>
         }
         />
       </Routes>
