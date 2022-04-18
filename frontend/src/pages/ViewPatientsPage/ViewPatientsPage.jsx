@@ -108,8 +108,8 @@ useEffect(()=>{
                    <tr>Notes Due For Recerification: {patientInfo.recertification_date}</tr>
                    {/* <tr>{visitInfo.visit.was_attended}</tr> */}
                    <tr>{visitInfo.makeup_needed}</tr>
-                   <tr>{patientInfo.summary_of_care_notes}</tr>
-                   <tr>{patientInfo.visits}</tr>
+                   <tr>Summary of Care Notes: {patientInfo.summary_of_care_notes}</tr>
+                   {/* <tr>{patientInfo.visits}</tr> */}
                    <tr>{visitInfo.was_attended}</tr>
                    <tr>Notes From Today's Visit: {noteInfo.note}</tr>
                    
