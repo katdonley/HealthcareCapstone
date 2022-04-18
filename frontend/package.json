@@ -8,6 +8,7 @@
     "@fullcalendar/interaction": "^5.11.0",
     "@fullcalendar/react": "^5.11.0",
     "@fullcalendar/resource-timeline": "^5.11.0",
+    "@react-google-maps/api": "^2.8.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

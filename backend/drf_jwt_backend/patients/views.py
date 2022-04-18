@@ -154,7 +154,7 @@ def user_notes(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def note_detail(request, pk):
-    note = get_object_or_404(Note, pk=pk)
+    note = get_object_or_404(Note, visit = pk)
     if request.method == 'GET':
         serializer = NoteSerializer(note)
         return Response(serializer.data)

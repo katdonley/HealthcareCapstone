@@ -29,7 +29,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
-      {/* <Link to="/addpatient">Add Patient</Link> */}
+      
       <Link to="/providerschedule">View Calendar</Link>
       
 

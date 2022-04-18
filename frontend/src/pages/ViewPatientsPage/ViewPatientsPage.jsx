@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
-import axios from 'axios'
-import api_key from '../../local_settings'
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
+// import api_key from '../../local_settings'
+import GoalOneButton from "../../components/GoalsButtons/GoalOneButton";
+import GoalTwoButton from "../../components/GoalsButtons/GoalTwoButton";
+import GoalThreeButton from "../../components/GoalsButtons/GoalThreeButton";
+import ClockInOut from "../../components/ClockInOut/ClockInOut";
+
+
+
 
 
 const ViewPatientsPage = (props) =>{
-//    const handleClick = (event, id, [provider_id], first_name, last_name, age, sex, guardian_name, guardian_relationship, primary_number, address, diagnoses, needs_pt, needs_bt, needs_st, needs_ot, recertification_date, summary_of_care_notes, visits) => {
    const [user, token] = useAuth();
    const [patientInfo, setPatientInfo] = useState([]);
    const [visitInfo, setVisitInfo] = useState([]);
-   const [currentAddress, setCurrentAddress] = useState([]);
-   const [directions, setDirections] = useState([]);
    const [addressInfo, setAddressInfo] = useState([]);
+   const [noteInfo, setNoteInfo] = useState([]);
    const {patientId} = useParams();
-//    const {patientAddress} = useParams();
+
 
 
    useEffect(()=>{
@@ -26,8 +31,13 @@ const ViewPatientsPage = (props) =>{
 }, []);
 
     useEffect(()=>{
-    getAddressInfo(addressInfo)
+    displayAddressInfo(addressInfo)
 }, []);
+
+useEffect(()=>{
+    displayNoteInfo(noteInfo)
+}, []);
+
 // GET PATIENT INFO BY PATIENT ID
    async function getPatientInfo(){
         let response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/`, {headers:{authorization:"Bearer " + token}});
@@ -46,12 +56,17 @@ const ViewPatientsPage = (props) =>{
     console.log(response.data)
     setAddressInfo(response.data)
    }
+// GET NOTE INFO BY VISIT ID
+    async function getNoteInfo(){
+        // let visitId = visitInfo.id
+        let response = await axios.get(`http://127.0.0.1:8000/api/notes/getnote/${patientId}/`, {headers:{authorization:"Bearer " + token}});
+        console.log(response.data)
+        setNoteInfo(response.data)
+    }
 
-// GET DIRECTIONS FROM GOOGLE MAPS
-   async function getDirections(){
-    let response = await axios.get(`https://maps.googleapis.com/maps/api/js?key=${api_key}&callback=initMap`, {headers:{authorization:"Bearer " + token}});
-    console.log(response.data)
-    setDirections(response.data)
+    function displayNoteInfo(noteInfo){
+        setNoteInfo(noteInfo)
+        getNoteInfo(noteInfo)
     }
 
    function displayVisitInfo(visitInfo){
@@ -64,41 +79,55 @@ const ViewPatientsPage = (props) =>{
        getPatientInfo(patientId)
    }
 
-   function getAddressInfo (addressInfo){
+   function displayAddressInfo (addressInfo){
        setAddressInfo(addressInfo)
        console.log(addressInfo)
-       getDirections(addressInfo)
-   }
-
-   const handleClick = (event, addressInfo) => {
-       event.preventDefault();
-       getDirections(addressInfo)
+       getAddressInfo(addressInfo)
    }
 
    return (
        <div>
+           <div className="container">
+               <h3>Clock In</h3>
+               <ClockInOut message="Clock In"/>
+           </div>
        <div className="container">
-           <h1>Patient Info:</h1>
+           <h2>Patient Info:</h2>
        </div>
+       
        <div>
-           <table>
+           <table class="center">
                <tbody>
                    <tr>{patientInfo.first_name + " "+ patientInfo.last_name}</tr>
                    <tr>{patientInfo.age + ", " + patientInfo.sex}</tr>
                    <tr>{patientInfo.guardian_name + ", " + patientInfo.guardian_relationship}</tr>
                    <tr>{patientInfo.primary_number}</tr>
-                    <tr>
-                        <button className={addressInfo} onClick={handleClick}>{patientInfo.address}</button>
-                        </tr>
+                    <tr>{patientInfo.address}</tr>
                    <tr>{patientInfo.diagnoses}</tr>
-                   <tr>{patientInfo.recertification_date}</tr>
-                   {/* <tr>{patientInfo.visit.was_attended}</tr> */}
-                   {/* <tr>{patientInfo.makeup_needed}</tr> */}
+                   <tr>{patientInfo.needs_pt}</tr>
+                   <tr>Notes Due For Recerification: {patientInfo.recertification_date}</tr>
+                   {/* <tr>{visitInfo.visit.was_attended}</tr> */}
+                   <tr>{visitInfo.makeup_needed}</tr>
                    <tr>{patientInfo.summary_of_care_notes}</tr>
                    <tr>{patientInfo.visits}</tr>
                    <tr>{visitInfo.was_attended}</tr>
+                   <tr>Notes From Today's Visit: {noteInfo.note}</tr>
+                   
+
                </tbody>
            </table>
+        <div className="container">
+            <br/>
+            <h2>Patient Goals: </h2>
+            <h4>Goal One</h4>
+            <GoalOneButton message="complete" />
+            <h4>Goal Two</h4>
+            <GoalTwoButton message="complete" />
+            <h4>Goal Three</h4>
+            <GoalThreeButton message="complete" />
+            <br/>
+            
+        </div>
        </div>
        </div>
    );
@@ -108,3 +137,11 @@ const ViewPatientsPage = (props) =>{
 }
     
 export default ViewPatientsPage
+
+
+// function showBooleans (patientInfo){
+//     if (patientInfo.needs_pt === True){
+//         print("Needs PT")
+//     }
+//     else
+// }

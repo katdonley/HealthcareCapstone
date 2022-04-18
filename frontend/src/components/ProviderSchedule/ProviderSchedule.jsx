@@ -12,12 +12,16 @@ import AddVisitPage from '../../pages/AddVisitPage/AddVisitPage'
 import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 // import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 import PrivateRoute from '../../utils/PrivateRoute'
+import PatientMap from '../Map/Map'
+
+
 
 const ProviderSchedule = (props) => {
     const [user, token] = useAuth();
     // const [newVisit, setNewVisit] = useState('')
     const [visits, setVisits] = useState([]);
     const [resources, setResources] = useState([]);
+    const [foundAddresses, setFoundAddresses] = useState([]);
     const {newVisit} = useParams();
     const [currentProviderId, setCurrentProviderId] = useState([]);
     const navigate = useNavigate();
@@ -44,14 +48,30 @@ const ProviderSchedule = (props) => {
     }
 
     useEffect(()=>{
-        getVisits(currentProviderId)
+        getVisits(visits)
+    }, []);
+
+    async function getAddresses(){
+        let response = await axios.get("http://127.0.0.1:8000/api/addresses/all/addresses/", {headers:{authorization:"Bearer " + token}});
+        console.log(response.data)
+        setFoundAddresses(response.data)
+    }
+
+    function displayFoundAddresses(foundAddresses){
+        setFoundAddresses(foundAddresses)
+        console.log(foundAddresses)
+        getAddresses(foundAddresses)
+    }
+
+    useEffect(() => {
+        displayFoundAddresses(foundAddresses)
     }, []);
     
     return (
         <div>
-            <div>
+            {/* <div>
             <Link to="/addvisit">Add Visit</Link>
-            </div>
+            </div> */}
             
             <div>
 
@@ -73,10 +93,7 @@ const ProviderSchedule = (props) => {
             />
             </div>
             <div>
-                <Routes>
-                
-                </Routes>
-                
+                <PatientMap />
             </div>
             
         </div>
@@ -87,24 +104,4 @@ const ProviderSchedule = (props) => {
 export default ProviderSchedule
 
 
-// function changeCurrentProvider (provider_id){
-    //     setCurrentProviderId(provider_id)
-    //     console.log(provider_id)
-    //     getVisits(provider_id)
-    // }
 
-
-// function getPatientInfo(patient_id){
-    //     setPatientInfo(patient_id)
-    //     console.log(patient_id)
-    //     let results = patient.map(function(el){
-    //         return el.patient_id;
-    //     })
-    //     return results;
-    // }
-
-
-    {/* <div>
-                <button onClick={visits}>f'{resources.title}See visit</button>
-            </div> */}
-            {/* <AddVisitPage /> */}
