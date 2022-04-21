@@ -13,6 +13,7 @@ import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 // import ViewPatientsPage from '../../pages/ViewPatientsPage/ViewPatientsPage'
 import PrivateRoute from '../../utils/PrivateRoute'
 import PatientMap from '../Map/Map'
+import AddPatientPage from '../../pages/AddPatientPage/AddPatientPage'
 
 
 
@@ -25,7 +26,7 @@ const ProviderSchedule = (props) => {
     const {newVisit} = useParams();
     const [currentProviderId, setCurrentProviderId] = useState([]);
     const navigate = useNavigate();
-
+    
     async function getVisits(){
         let response = await axios.get("http://127.0.0.1:8000/api/visits/all/visits/", {headers:{authorization:"Bearer " + token}});
         console.log(response.data)
@@ -72,11 +73,17 @@ const ProviderSchedule = (props) => {
             {/* <div>
             <Link to="/addvisit">Add Visit</Link>
             </div> */}
-            
             <div>
+                <Link to={`/addpatient`}>Add Patient</Link>
+                
+            </div>
+            <div id='calendar' >
 
             <FullCalendar 
             // changeCurrentProvider = {changeCurrentProvider}
+            
+            height={350}
+            
             plugins={[ resourceTimelinePlugin, interactionPlugin,  ]}
             editable= 'True'
             initialView='resourceTimelineWeek'
@@ -91,6 +98,9 @@ const ProviderSchedule = (props) => {
             eventColor='#378006'
             eventClick={(info) => navigate(`/patients/${info.event._def.resourceIds}/`)}
             />
+            </div>
+            <div>
+            
             </div>
             <div>
                 <PatientMap />

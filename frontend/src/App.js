@@ -10,6 +10,8 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AddPatientPage from "./pages/AddPatientPage/AddPatientPage";
 import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
 import AddVisitPage from "./pages/AddVisitPage/AddVisitPage";
+import AddNotePage from "./pages/AddNotePage/AddNotePage";
+
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -18,6 +20,7 @@ import ProviderSchedule from "./components/ProviderSchedule/ProviderSchedule";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+
 
 
 function App() {
@@ -39,7 +42,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route 
-        path="/addpatient" 
+        path="/addpatient/:patientId" 
         element={
           <PrivateRoute>
             <AddPatientPage />
@@ -68,6 +71,14 @@ function App() {
         <PrivateRoute>
             <AddVisitPage />
         </PrivateRoute>
+        }
+        />
+        <Route 
+        path="/addnote" 
+        element={
+          <PrivateRoute>
+            <AddNotePage />
+          </PrivateRoute>
         }
         />
       </Routes>

@@ -143,6 +143,7 @@ def get_all_notes(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def user_notes(request):
+    # note = get_object_or_404(Note, visit = pk)
     if request.method == 'POST':
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():

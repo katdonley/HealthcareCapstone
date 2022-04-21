@@ -1,6 +1,7 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader, LoadScript, Marker } from '@react-google-maps/api';
 import { useState, useCallback, memo } from 'react';
+import api_key from '../../local_settings'
 
 
 
@@ -35,7 +36,7 @@ function PatientMap () {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCi-K7or6pfWQfKGqW8U_rDh_Wbxy343-Y"
+    googleMapsApiKey: api_key
   })
 
   const [map, setMap] = useState(null)

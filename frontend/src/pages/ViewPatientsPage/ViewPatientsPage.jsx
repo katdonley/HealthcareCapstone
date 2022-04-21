@@ -87,6 +87,9 @@ useEffect(()=>{
 
    return (
        <div>
+           <div>
+           <Link to={`/addvisit/${patientId}`}>Add Visit</Link>
+           </div>
            <div className="container">
                <h3>Clock In</h3>
                <ClockInOut message="Clock In"/>
@@ -105,13 +108,17 @@ useEffect(()=>{
                     <tr>{patientInfo.address}</tr>
                    <tr>{patientInfo.diagnoses}</tr>
                    <tr>{patientInfo.needs_pt}</tr>
-                   <tr>Notes Due For Recerification: {patientInfo.recertification_date}</tr>
+                   <tr>Notes Due For Recertification: {patientInfo.recertification_date}</tr>
                    {/* <tr>{visitInfo.visit.was_attended}</tr> */}
                    <tr>{visitInfo.makeup_needed}</tr>
                    <tr>Summary of Care Notes: {patientInfo.summary_of_care_notes}</tr>
                    {/* <tr>{patientInfo.visits}</tr> */}
                    <tr>{visitInfo.was_attended}</tr>
-                   <tr>Notes From Today's Visit: {noteInfo.note}</tr>
+                   <tr>Notes From Today's Visit: {noteInfo.note}
+                   <div>
+                       <Link to={`/addnote`}>Add Note</Link>
+                   </div>
+                    </tr>
                    
 
                </tbody>

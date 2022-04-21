@@ -1,3 +1,7 @@
+# local_settings file for API Key
+src/local_settings.js
+
+
 # Logs
 logs
 *.log

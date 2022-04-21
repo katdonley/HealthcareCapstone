@@ -1,1 +1,2 @@
-// let api_key = 'AIzaSyCi-K7or6pfWQfKGqW8U_rDh_Wbxy343-Y'
+const api_key = 'AIzaSyAZlQP4gm7-kqRyrra0UO5tDavg9srJqj8'
+export default api_key
