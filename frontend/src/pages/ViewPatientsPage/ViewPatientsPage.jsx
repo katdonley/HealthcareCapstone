@@ -8,10 +8,6 @@ import GoalTwoButton from "../../components/GoalsButtons/GoalTwoButton";
 import GoalThreeButton from "../../components/GoalsButtons/GoalThreeButton";
 import ClockInOut from "../../components/ClockInOut/ClockInOut";
 
-
-
-
-
 const ViewPatientsPage = (props) =>{
    const [user, token] = useAuth();
    const [patientInfo, setPatientInfo] = useState([]);
@@ -20,11 +16,9 @@ const ViewPatientsPage = (props) =>{
    const [noteInfo, setNoteInfo] = useState([]);
    const {patientId} = useParams();
 
-
-
    useEffect(()=>{
     displayPatientInfo(patientInfo)
-}, []);
+}, [token]);
 
     useEffect(()=>{
     displayVisitInfo(visitInfo)
@@ -40,7 +34,7 @@ useEffect(()=>{
 
 // GET PATIENT INFO BY PATIENT ID
    async function getPatientInfo(){
-        let response = await axios.get(`http://127.0.0.1:8000/api/patients/${patientId}/`, {headers:{authorization:"Bearer " + token}});
+        let response = await axios.get(`http://127.0.0.1:8000/api/patients/patients/${patientId}/`, {headers:{authorization:"Bearer " + token}});
         console.log(response.data)
         setPatientInfo(response.data)
    }
@@ -56,9 +50,8 @@ useEffect(()=>{
     console.log(response.data)
     setAddressInfo(response.data)
    }
-// GET NOTE INFO BY VISIT ID
+// GET NOTE INFO BY PATIENT ID
     async function getNoteInfo(){
-        // let visitId = visitInfo.id
         let response = await axios.get(`http://127.0.0.1:8000/api/notes/getnote/${patientId}/`, {headers:{authorization:"Bearer " + token}});
         console.log(response.data)
         setNoteInfo(response.data)
@@ -90,6 +83,9 @@ useEffect(()=>{
            <div>
            <Link to={`/addvisit/${patientId}`}>Add Visit</Link>
            </div>
+           <div>
+           <Link to={`/patient/${patientId}`}>Update Patient Info</Link>
+           </div>
            <div className="container">
                <h3>Clock In</h3>
                <ClockInOut message="Clock In"/>
@@ -99,8 +95,9 @@ useEffect(()=>{
        </div>
        
        <div>
-           <table class="center">
+           <table className="center">
                <tbody>
+                   <tr>{patientInfo.patient_id}</tr>
                    <tr>{patientInfo.first_name + " "+ patientInfo.last_name}</tr>
                    <tr>{patientInfo.age + ", " + patientInfo.sex}</tr>
                    <tr>{patientInfo.guardian_name + ", " + patientInfo.guardian_relationship}</tr>
@@ -109,20 +106,17 @@ useEffect(()=>{
                    <tr>{patientInfo.diagnoses}</tr>
                    <tr>{patientInfo.needs_pt}</tr>
                    <tr>Notes Due For Recertification: {patientInfo.recertification_date}</tr>
-                   {/* <tr>{visitInfo.visit.was_attended}</tr> */}
+                   {/* <tr>{visitInfo.visit.start}</tr> */}
                    <tr>{visitInfo.makeup_needed}</tr>
                    <tr>Summary of Care Notes: {patientInfo.summary_of_care_notes}</tr>
                    {/* <tr>{patientInfo.visits}</tr> */}
                    <tr>{visitInfo.was_attended}</tr>
-                   <tr>Notes From Today's Visit: {noteInfo.note}
-                   <div>
-                       <Link to={`/addnote`}>Add Note</Link>
-                   </div>
-                    </tr>
-                   
-
+                   <tr>Notes From Today's Visit (Include Missed Visits, Makeups, and Goals for the Day): {noteInfo.note}</tr>
                </tbody>
            </table>
+           <div>
+                <Link to={`/getnote/${patientId}`}>Add Note</Link>
+            </div>
         <div className="container">
             <br/>
             <h2>Patient Goals: </h2>

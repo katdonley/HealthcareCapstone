@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 import useCustomForm from "../../hooks/useCustomForm";
 
 let initialValues = {
@@ -23,17 +22,18 @@ let initialValues = {
     summary_of_care_notes: "",
     visits: "",
     providers: "",
-};
+}
 
-const AddPatientPage = () => {
-    const [user, token] = useAuth()
-    const navigate = useNavigate()
-    const [newPatient, setNewPatient] = useState([])
-    const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, postNewPatient)
+const UpdatePatientPage = (props) =>{
+    const [patientInfo, setPatientInfo] = useState([]);
+    const [user, token] = useAuth();
+    const navigate = useNavigate();
+    const {patientId} = useParams();
+    const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, updatePatient)
 
-    async function postNewPatient(){
+    async function updatePatient(){
         try {
-            let response = await axios.post("http://127.0.0.1:8000/api/patients/", formData, {
+            let response = await axios.put(`http://127.0.0.1:8000/api/patients/patient/${patientId}/`, formData, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -42,7 +42,6 @@ const AddPatientPage = () => {
         } catch (error) {
             console.log(error.message)
         }
-        
     }
 
     return(
@@ -201,10 +200,10 @@ const AddPatientPage = () => {
                         onChange={handleInputChange}
                     />
                 </label>
-                <button>Add Patient</button>
+                <button>Update Patient</button>
             </form>
         </div>
     )
 };
 
-export default AddPatientPage
+export default UpdatePatientPage

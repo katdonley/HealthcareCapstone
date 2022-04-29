@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 
 import useAuth from "../../hooks/useAuth";
@@ -12,14 +12,15 @@ let initialValues = {
     note: "",
 };
 
-const AddNotePage = () => {
+const AddNotePage = (props) => {
     const [user, token] = useAuth()
     const navigate = useNavigate()
+    const {patientId} = useParams();
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, postNewNote)
 
     async function postNewNote(){
         try {
-            let response = await axios.post("http://127.0.0.1:8000/api/notes/notes/", formData, {
+            let response = await axios.post(`http://127.0.0.1:8000/api/notes/getnote/${patientId}/`, formData, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -38,11 +39,11 @@ const AddNotePage = () => {
                     <input
                         type="text"
                         name="patient_id"
-                        value={formData.patient_id}
+                        value={patientId.patient_id}
                         onChange={handleInputChange}
                     />
-                </label>
-                <label>
+                </label> */}
+                {/* <label>
                     Provider:{" "}
                     <input
                         type="text"
@@ -70,7 +71,7 @@ const AddNotePage = () => {
                     />
                 </label>
                 
-                <button>Add Note</button>
+                <button >Add Note</button>
             </form>
         </div>
     )

@@ -140,23 +140,29 @@ def get_all_notes(request):
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def user_notes(request, pk):
+#     note = get_object_or_404(Note, patient = pk)
+#     if request.method == 'POST':
+#         serializer = NoteSerializer(note, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE', 'POST'])
 @permission_classes([IsAuthenticated])
-def user_notes(request):
-    # note = get_object_or_404(Note, visit = pk)
+def note_detail(request, pk):
+    note = get_object_or_404(Note, patient = pk)
     if request.method == 'POST':
-        serializer = NoteSerializer(data=request.data)
+        serializer = NoteSerializer(note, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
-def note_detail(request, pk):
-    note = get_object_or_404(Note, visit = pk)
-    if request.method == 'GET':
+    elif request.method == 'GET':
         serializer = NoteSerializer(note)
         return Response(serializer.data)
     elif request.method == 'PUT':

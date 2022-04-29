@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 
@@ -7,13 +7,17 @@ import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
 
 let initialValues = {
-    
+    // patient: "",
+    // provider: "",
+    start: "",
+    end: ""
 }
 
 const AddVisitPage = (props) => {
     const [user, token] = useAuth()
     const navigate = useNavigate()
-    const [initialValues] = {patient: '', provider: '', start: '', end: '', was_attended: '', makeup_needed: ''};
+    const {patientId} = useParams
+    // const [initialValues] = {patient: '', provider: '', start: '', end: '', was_attended: '', makeup_needed: ''};
     const [formData, handleInputChange, handleSubmit] = useCustomForm(initialValues, postNewVisit)
     const [newVisit, setNewVisit] = useState('')
 
@@ -22,7 +26,7 @@ const AddVisitPage = (props) => {
     }, []);
 
     async function postNewVisit(){
-        let response = await axios.post("http://127.0.0.1:8000/api/visits/", {headers: {Authorization: 'Bearer ' + token}});
+        let response = await axios.put(`http://127.0.0.1:8000/api/visits/get/${patientId}/`, {headers: {Authorization: 'Bearer ' + token}});
         console.log(response.data)
         setNewVisit(response.data)
     }
@@ -41,7 +45,7 @@ const AddVisitPage = (props) => {
     return(
         <div className="container">
             <form className={newVisit} onSubmit={handleSubmit}>
-                <label>
+                {/* <label>
                     Patient:{" "}
                     <input
                         type="text"
@@ -58,9 +62,10 @@ const AddVisitPage = (props) => {
                         value={formData.provider}
                         onChange={handleInputChange}
                     />
-                </label>
+                </label> */}
+                <div>
                 <label>
-                    Start:{" "}
+                    Start (Date:YYYY/MM/DD, Time: HH:MM:SS):{" "}
                     <input
                         type="text"
                         name="start"
@@ -68,8 +73,10 @@ const AddVisitPage = (props) => {
                         onChange={handleInputChange}
                     />
                 </label>
+                </div>
+                <div>
                 <label>
-                    End:{" "}
+                    End (Date:YYYY/MM/DD, Time: HH:MM:SS):{" "}
                     <input
                         type="text"
                         name="end"
@@ -77,7 +84,8 @@ const AddVisitPage = (props) => {
                         onChange={handleInputChange}
                     />
                 </label>
-                <label>
+                </div>
+                {/* <label>
                     WasAttended:{" "}
                     <input
                         type="text"
@@ -94,7 +102,7 @@ const AddVisitPage = (props) => {
                         value={formData.makeup_needed}
                         onChange={handleInputChange}
                     />
-                </label>
+                </label> */}
                 <button onClick={handleClick}>Add Visit</button>
             </form>
         </div>

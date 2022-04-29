@@ -11,10 +11,13 @@ const HomePage = () => {
   const [user, token] = useAuth();
   const [patients, setPatients] = useState([]);
 
+
+
+
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        let response = await axios.get("http://127.0.0.1:8000/api/patients/", {
+        let response = await axios.get("http://127.0.0.1:8000/api/patients/all/", {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -31,13 +34,17 @@ const HomePage = () => {
       <h1>Home Page for {user.username}!</h1>
       
       <Link to="/providerschedule">View Calendar</Link>
+      <div>
+        <Link to={`/addpatient`}>Add Patient</Link>
+      </div>
       
+      <h2>Patient List: </h2>
 
 
       {patients &&
         patients.map((patient) => (
           <p key={patient.id}>
-            {patient.firstName} {patient.lastName} {patient.age} {patient.sex} {patient.guardianName} {patient.guardianRelationship} {patient.primaryNumber} {patient.address} {patient.diagnoses} {patient.servicesNeeded} {patient.recertificationDate} {patient.summaryOfCareNotes} {patient.visits} 
+            {patient.first_name} {patient.last_name + ": " + patient.diagnoses} 
           </p>
         ))}
     </div>

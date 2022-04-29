@@ -11,6 +11,7 @@ import AddPatientPage from "./pages/AddPatientPage/AddPatientPage";
 import ViewPatientsPage from "./pages/ViewPatientsPage/ViewPatientsPage";
 import AddVisitPage from "./pages/AddVisitPage/AddVisitPage";
 import AddNotePage from "./pages/AddNotePage/AddNotePage";
+import UpdatePatientPage from "./pages/UpdatePatientPage/UpdatePatientPage";
 
 
 // Component Imports
@@ -42,7 +43,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route 
-        path="/addpatient/:patientId" 
+        path="/addpatient" 
         element={
           <PrivateRoute>
             <AddPatientPage />
@@ -66,7 +67,15 @@ function App() {
         }
         />
         <Route 
-        path="/addvisit" 
+        path="/patient/:patientId" 
+        element={
+          <PrivateRoute>
+            <UpdatePatientPage />
+          </PrivateRoute>
+        }
+        />
+        <Route 
+        path="/addvisit/:patientId" 
         element={
         <PrivateRoute>
             <AddVisitPage />
@@ -74,7 +83,7 @@ function App() {
         }
         />
         <Route 
-        path="/addnote" 
+        path="/getnote/:patientId" 
         element={
           <PrivateRoute>
             <AddNotePage />
@@ -82,7 +91,7 @@ function App() {
         }
         />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

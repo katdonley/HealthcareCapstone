@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GoogleMap, useJsApiLoader, LoadScript, Marker } from '@react-google-maps/api';
 import { useState, useCallback, memo } from 'react';
-import api_key from '../../local_settings'
+import api_key from '../../local_settings';
+import "./Map.css";
+import axios from "axios";
+import useAuth from '../../hooks/useAuth';
+
 
 
 
@@ -10,6 +14,7 @@ import api_key from '../../local_settings'
 
 function PatientMap () {
   // const [patientAddress, setPatientAddress] = useState([])
+  const [user, token] = useAuth();
 
   
 
@@ -42,6 +47,9 @@ function PatientMap () {
   const [map, setMap] = useState(null)
 
   const [markers, setMarkers] = useState([
+    // latLing = address.latLing,
+    // addressArray = latLing.split(" "),
+    // {lat: addressArray[0], lng: addressArray[1]}
     {lat: 45.675260926686, lng: -111.05023027358634},
     {lat: 45.68197519565491, lng: -111.0347223024214},
     {lat: 45.65905825266612, lng: -110.99404490242216},
@@ -49,9 +57,35 @@ function PatientMap () {
     {lat: 45.69629567128898, lng: -111.07529377785012},
   ]);
 
+  // useEffect(() => {
+  //   const fetchAddresses = async () => {
+  //     try {
+  //       let response = await axios.get("http://127.0.0.1:8000/api/addresses/all/addresses/", {
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       });
+  //       setMarkers(response.data);
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   };
+  //   fetchAddresses();
+  // }, [token]);
+
   const onUnmount = useCallback(function callback(map) {
     setMap(null)
   }, [])
+
+  const[markerClass, setMarkerClass] = useState('inactive');
+  function handleClick(){
+    if(markerClass === 'inactive'){
+      setMarkerClass('active');
+    }
+    else {
+      setMarkerClass('inactive');
+    }
+  }
 
   return isLoaded ? (
     <div>
@@ -62,9 +96,16 @@ function PatientMap () {
         zoom={11.75}
         onLoad={onLoad}
         onUnmount={onUnmount}
+      
       >
-      {markers.map((marker) => (
-        <Marker position={marker} />
+      {markers &&
+        markers.map((marker) => (
+        <p key={marker.id}>
+        <Marker 
+        position={marker} 
+        onClick={handleClick}
+        />
+        </p>
       ))}
       
       

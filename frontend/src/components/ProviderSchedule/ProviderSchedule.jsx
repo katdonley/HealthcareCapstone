@@ -73,16 +73,13 @@ const ProviderSchedule = (props) => {
             {/* <div>
             <Link to="/addvisit">Add Visit</Link>
             </div> */}
-            <div>
-                <Link to={`/addpatient`}>Add Patient</Link>
-                
-            </div>
+            
             <div id='calendar' >
 
             <FullCalendar 
             // changeCurrentProvider = {changeCurrentProvider}
             
-            height={350}
+            height={375}
             
             plugins={[ resourceTimelinePlugin, interactionPlugin,  ]}
             editable= 'True'
