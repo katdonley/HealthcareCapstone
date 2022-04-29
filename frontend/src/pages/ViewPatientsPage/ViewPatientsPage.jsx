@@ -80,9 +80,9 @@ useEffect(()=>{
 
    return (
        <div>
-           <div>
+           {/* <div>
            <Link to={`/addvisit/${patientId}`}>Add Visit</Link>
-           </div>
+           </div> */}
            <div>
            <Link to={`/patient/${patientId}`}>Update Patient Info</Link>
            </div>

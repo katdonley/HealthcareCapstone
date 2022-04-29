@@ -6,12 +6,6 @@ import "./Map.css";
 import axios from "axios";
 import useAuth from '../../hooks/useAuth';
 
-
-
-
-
-
-
 function PatientMap () {
   // const [patientAddress, setPatientAddress] = useState([])
   const [user, token] = useAuth();
@@ -57,6 +51,7 @@ function PatientMap () {
     {lat: 45.69629567128898, lng: -111.07529377785012},
   ]);
 
+  
   // useEffect(() => {
   //   const fetchAddresses = async () => {
   //     try {
